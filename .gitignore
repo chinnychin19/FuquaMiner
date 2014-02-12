@@ -10,9 +10,8 @@ lib-cov
 pids
 logs
 results
-config.js
 
-./config.js
+Twitter/config.js
 
 npm-debug.log
 node_modules
