@@ -17,3 +17,4 @@ node_modules
 #Twitter stuff
 Twitter/config.js
 Twitter/node_modules/*
+Twitter/output/*
