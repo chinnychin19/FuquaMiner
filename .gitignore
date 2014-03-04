@@ -18,3 +18,5 @@ node_modules
 Twitter/config.js
 Twitter/node_modules/*
 Twitter/output/*
+Twitter/test/*
+Twitter/test.js
