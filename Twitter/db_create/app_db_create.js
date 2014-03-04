@@ -10,7 +10,7 @@ var TScraper = new Twit(config.twitterCredentials);
 var args = process.argv.slice(2);
 var DEBUG_MODE = args.indexOf('-d') >= 0;
 
-var connectURI = mongoConnectUri;
+var connectURI = config.mongoConnectUri;
 var collectionName = 'Microsoft_Accounts';
 
 var requestQueue = []; //stores the relevant data to be submitted in each tweet

@@ -25,4 +25,4 @@ exports.DEFAULT_NUM_TWEETS = 100000;
 
 // TODO: make these real values
 exports.RATE_LIMIT = 10;
-exports.RATE_PERIOD = 2*exports.TIME_SECOND;
+exports.RATE_PERIOD = 60*exports.TIME_SECOND;
