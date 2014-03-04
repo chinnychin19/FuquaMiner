@@ -25,7 +25,32 @@ function csvWriteStream(outFileName, keyObj) { //file name does not include exte
 		}
 		line = line.slice(0, line.length - 1) + "\n"; //chop off last comma
 		stream.out.write(line);
-		// console.log(line);
+	}
+
+	stream.addRow = addRow;
+	return stream;
+}
+
+function csvUpdateStream(outFileName, keyObj) { //file name does not include extension
+	var stream = {};
+	stream.out = fs.createWriteStream(outFileName+".csv", {"flags":"r+"});
+	stream.keys = []; //list because ORDER MATTERS!!!
+	for (var key in keyObj) {
+		stream.keys.push(key);
+	}
+
+	function addRow(obj) {
+		var line = "";
+		for (var i in stream.keys) {
+			var element = obj[stream.keys[i]];
+			var safeData = "";
+			if (element) {
+				safeData = makeCSVSafeElement(element);
+			}
+			line += safeData + ",";
+		}
+		line = line.slice(0, line.length - 1) + "\n"; //chop off last comma
+		stream.out.write(line);
 	}
 
 	stream.addRow = addRow;
@@ -43,3 +68,4 @@ function makeCSVSafeElement(element) {
 }
 
 exports.csvWriteStream = csvWriteStream;
+exports.csvUpdateStream = csvUpdateStream;
