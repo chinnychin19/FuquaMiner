@@ -4,7 +4,7 @@ var TScraper = new Twit(config.twitterCredentials);
 var mongo = require('../mongo');
 var mailer = require('../mailer.js');
 
-var connectUri = config.mongoConnectUri;
+var connectUri = config.mongoServerUri;
 
 
 var streamPeriod = 89*1000;
@@ -22,8 +22,9 @@ try {
 
 function doStream() {
 	stream = TScraper.stream('statuses/filter', {
-		follow: ["Microsoft","MSFTnews","BoydMulterer","gilbert","MicrosoftOEM","thatrobguy",
-		"MSFTResearchCam","Microsoft_DPE","PlayXBLA"],
+		// follow: ["Microsoft","MSFTnews","BoydMulterer","gilbert","MicrosoftOEM","thatrobguy",
+		// "MSFTResearchCam","Microsoft_DPE","PlayXBLA"],
+		track: "apple"
 	});
 
 	stream.on('connect', function(request) {
@@ -49,7 +50,7 @@ function doStream() {
 		console.log(message);
 		console.log(tweet.text);
 		console.log();
-		mongo.addObjectsToDB(connectUri, "Microsoft_Accounts", [tweet]);
+		mongo.addObjectsToDB(connectUri, "twitter", [tweet]);
 	});
 
 	stream.on('warning', function (warning) {

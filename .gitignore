@@ -20,3 +20,8 @@ Twitter/node_modules/*
 Twitter/output/*
 Twitter/test/*
 Twitter/test.js
+
+#Open Access stuff
+OpenAccess/node_modules/*
+OpenAccess/config.js
+OpenAccess/articles/*
