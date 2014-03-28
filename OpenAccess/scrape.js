@@ -29,7 +29,7 @@ scrape("http://omicsonline.org/current.xml",
 						count++;
 						var url = response.link;
 						var hash = crypto.createHash('md5').update(article).digest('hex'); //hash of the article text
-						mongo.addObjectsToDB(config.mongoLabUri, "openAccess", [{ // third parameter is a LIST of json objects!
+						mongo.addObjectsToDB(config.mongoConnectUri, "OpenAccess", [{ // third parameter is a LIST of json objects!
 							"_id"  : hash, //primary key to prevent duplicates
 							"link" : url,
 							"data" : article

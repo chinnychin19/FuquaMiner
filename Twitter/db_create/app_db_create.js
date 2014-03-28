@@ -84,6 +84,7 @@ function scrapeAllTweets_helper(screen_name, maxTweetId) {
 		for (var i in reply) {
 			var obj = reply[i];
 			obj.screen_name = screen_name;
+			obj._id = obj.id_str;
 		}
 		mongo.addObjectsToDB(connectURI, collectionName, reply);
 		if (reply.length > 0) {
