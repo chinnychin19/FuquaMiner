@@ -4,27 +4,24 @@ var TScraper = new Twit(config.twitterCredentials);
 var mongo = require('../mongo');
 var mailer = require('../mailer.js');
 
-var connectUri = config.mongoServerUri;
+var connectUri = config.mongoConnectUri;
 
 
-var streamPeriod = 89*1000;
+var refreshRate = 1000*60*60*6; //reconnect every 6 hours
 var stream;
 
 try {
 	doStream();
 	setInterval(function() {
-		stream.stop();
+		// stream.stop();
 		stream.start();
-	}, streamPeriod);
+	}, refreshRate);
 } catch (err) {
 	mailer.sendMail(config.myEmail, err);
 }
 
 function doStream() {
-	stream = TScraper.stream('statuses/filter', {
-		// follow: ["Microsoft","MSFTnews","BoydMulterer","gilbert","MicrosoftOEM","thatrobguy",
-		// "MSFTResearchCam","Microsoft_DPE","PlayXBLA"],
-		track: "apple"
+	stream = TScraper.stream('user', {
 	});
 
 	stream.on('connect', function(request) {
@@ -46,11 +43,11 @@ function doStream() {
 
 	stream.on('tweet', function (tweet) {
 		var message = 'tweet from '+tweet.user.screen_name;
-		mailer.sendMail(config.myEmail, message);
 		console.log(message);
 		console.log(tweet.text);
 		console.log();
-		mongo.addObjectsToDB(connectUri, "twitter", [tweet]);
+		tweet._id = tweet.id_str;
+		mongo.addObjectsToDB(connectUri, "Microsoft_Accounts", [tweet]);
 	});
 
 	stream.on('warning', function (warning) {
