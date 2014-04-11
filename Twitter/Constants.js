@@ -23,6 +23,7 @@ exports.KEY_OBJ = {
 
 exports.DEFAULT_NUM_TWEETS = 100000;
 
-// TODO: make these real values
-exports.RATE_LIMIT = 10;
-exports.RATE_PERIOD = 60*exports.TIME_SECOND;
+exports.RATE_LIMIT = 150; //It's actually 180, but use 150 to be safe
+exports.RATE_WINDOW = 15*exports.TIME_MINUTE;
+exports.RATE_PERIOD = 15*exports.TIME_MINUTE; // DEPRECATED!!! use rate window
+
