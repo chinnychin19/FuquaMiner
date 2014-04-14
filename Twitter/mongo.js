@@ -22,10 +22,11 @@ function addObjectsToDB(connectURI, collectionName, data) { // data is a list of
 					}
 				}
 				if (numSent == data.length) { // report when all db additions complete
-					console.log("All objects sent to MongoDB from list of length "+data.length);
+					var msg = "All objects sent to MongoDB from list of length "+data.length+".";
 					if (dupCount > 0) {
-						console.log("***Note: There were "+dupCount+" duplicates***");
+						msg += " **("+dupCount+" duplicates)**";
 					}
+					console.log(msg);
 				}
 			});
 		}

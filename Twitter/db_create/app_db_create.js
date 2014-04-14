@@ -19,12 +19,13 @@ readScreenNames('../screen_names.in');
 // Call main almost immediately (give time for screen_names to be read)
 setTimeout(mainFunction, 2*Constants.TIME_SECOND);
 // Continue calling main periodically
-setInterval(mainFunction, Constants.RATE_PERIOD);
+setInterval(mainFunction, Constants.TIME_SECOND * 60);
 
 // When called, submits at most RATE_LIMIT requests from the request queue
 function mainFunction() {
 	console.log('calling main');
-	var limit = Constants.RATE_LIMIT;
+	var limit = 10; // This whole file should get replaced when db_create_2 stops rate limiting... so magic numbers are okay for now.
+	console.log(limit);
 	while (requestQueue.length > 0 && limit > 0) {
 		var requestObject = requestQueue.shift();
 		limit--;
