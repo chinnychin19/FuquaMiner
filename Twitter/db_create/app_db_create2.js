@@ -10,11 +10,10 @@ var TScraper = new Twit(config.twitterCredentials);
 var connectURI = config.mongoConnectUri;
 var collectionName = 'Microsoft_Accounts';
 
+var PERIOD = Constants.RATE_WINDOW / Constants.RATE_LIMIT;
+
 var requestQueue = []; //stores the relevant data to be submitted in each tweet
 readScreenNames('../screen_names.in');
-
-var PERIOD = Constants.RATE_WINDOW / Constants.RATE_LIMIT;
-a = 9/0;
 
 // Keep calling main periodically
 setInterval(mainFunction, PERIOD);
@@ -25,9 +24,9 @@ function mainFunction() {
 		console.log("All requests sent");
 		return;
 	}
-	console.log("Pending requests in queue: "+requestQueue.length);
+	console.log("Num pending: "+requestQueue.length);
 	var requestObject = requestQueue.shift();
-	console.log("sending request for "+requestObject.options.screen_name);
+	console.log("sending: "+requestObject.options.screen_name);
 	TScraper.get(requestObject.request, requestObject.options, requestObject.callback);
 }
 
