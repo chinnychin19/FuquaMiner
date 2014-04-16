@@ -39,11 +39,8 @@ function mainFunction() {
 	}
 }
 
-// Only prints to console when executed with -d option (debug)
 function log(str) {
-	if (DEBUG_MODE) {
-		console.log(str);
-	}
+	console.log(str);
 }
 
 // Reads all lines from an input file
@@ -79,7 +76,8 @@ function scrapeAllTweets_helper(screen_name, maxTweetId) {
 	requestObject.callback = function(err, reply) {
 		if (err) {
 			requestQueue.unshift(requestObject);
-			log("rate limit exceeded. please be patient.");
+			log("Error!");
+			log(err);
 			return;
 		}
 		for (var i in reply) {
@@ -89,7 +87,6 @@ function scrapeAllTweets_helper(screen_name, maxTweetId) {
 		}
 		mongo.addObjectsToDB(connectURI, collectionName, reply);
 		if (reply.length > 0) {
-			log('still scraping... ('+screen_name+')');
 			maxTweetId = bigInt(reply[reply.length-1].id_str).prev().toString();
 			scrapeAllTweets_helper(screen_name, maxTweetId);
 		} else {

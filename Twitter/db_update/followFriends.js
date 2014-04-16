@@ -10,10 +10,10 @@ readScreenNames('../screen_names_already_scraped.in');
 function follow(screen_name) {
 	TScraper.post("friendships/create", {"screen_name" : screen_name}, function(err, reply) {
 		if (err) {
-			console.log("Error");
+			console.log("Error for "+screen_name);
 			console.log(err);
 		} else {
-			console.log('following '+screen_name);
+			// console.log('following '+screen_name);
 		}
 	});
 }
