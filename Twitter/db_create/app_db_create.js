@@ -25,7 +25,6 @@ setInterval(mainFunction, Constants.TIME_SECOND * 60);
 function mainFunction() {
 	console.log('calling main');
 	var limit = 10; // This whole file should get replaced when db_create_2 stops rate limiting... so magic numbers are okay for now.
-	console.log(limit);
 	while (requestQueue.length > 0 && limit > 0) {
 		var requestObject = requestQueue.shift();
 		limit--;
