@@ -4,7 +4,7 @@ var fs = require('fs');
 
 var TScraper = new Twit(config.twitterCredentials);
 
-readScreenNames('../screen_names_already_scraped.in');
+readScreenNames('../screen_names.in');
 
 // When called, submits at most RATE_LIMIT requests from the request queue
 function follow(screen_name) {

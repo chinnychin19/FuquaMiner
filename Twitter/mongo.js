@@ -1,10 +1,15 @@
 var MongoClient = require('mongodb').MongoClient;
 var format = require('util').format;
 
-function addObjectsToDB(connectURI, collectionName, data) { // data is a list of JSON objects
+function addObjectsToDB(connectURI, collectionName, data, attempt) { // data is a list of JSON objects
+	if (!!!attempt) {
+		attempt = 1; // first attempt
+	}
 	MongoClient.connect(connectURI, function (err, db) {
 		if (err) {
 			console.log(err);
+			tryAgain(connectURI, collectionName, data, attempt, err);
+			return;
 		}
 
 		var numSent = 0;
@@ -18,7 +23,7 @@ function addObjectsToDB(connectURI, collectionName, data) { // data is a list of
 					if (err.code == '11000') {
 						dupCount++
 					} else {
-						throw err; //memory error?
+						tryAgain(connectURI, collectionName, data, attempt, err);
 					}
 				}
 				if (numSent == data.length) { // report when all db additions complete
@@ -31,6 +36,18 @@ function addObjectsToDB(connectURI, collectionName, data) { // data is a list of
 			});
 		}
 	})
+}
+
+function tryAgain(connectURI, collectionName, data, attempt, err) {
+	if (attempt >= 10) {
+		console.log('giving up trying to connect...');
+		console.log(err);
+		return;
+	}
+	setTimeout(function() {
+		console.log('attempting to connect again');
+		addObjectsToDB(connectURI, collectionName, data, attempt+1);
+	}, 5000); // try again in 5 seconds
 }
 
 exports.addObjectsToDB = addObjectsToDB;
