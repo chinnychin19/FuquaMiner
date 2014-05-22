@@ -6,23 +6,25 @@ var Constants = require('../Constants.js');
 var mongo = require('../mongo');
 var companyMap = require('./companyMap.js').companyMap;
 
-var TScraper = new Twit(config.chinmayCredentials);
-
 var connectURI = config.mongoConnectUri;
 var collectionName = 'Microsoft_Accounts';
 
-var allScreenNames = process.argv.slice(2);
-if (allScreenNames.length == 0) {
-	console.log("Error!! Requires at least one space-separated screen name provided");
-	return;
-}
+
+
+var TScraper = new Twit(config.twitterCredentials);
+// var TScraper = new Twit(config.chinmayCredentials);
+// var TScraper = new Twit(config.chinmayCredentials2);
+
+var allScreenNames = fs.readFileSync('../zzRemaining.txt').toString().trim().split('\n');
 var screen_name = allScreenNames.shift();
+
+
 
 var numCalls = 0;
 scrapeAllTweets(screen_name);
 
 function scrapeAllTweets(screen_name) {
-	scrapeAllTweets_helper(screen_name);
+	scrapeAllTweets_helper(screen_name.trim());
 }
 
 function scrapeAllTweets_helper(screen_name, maxTweetId) {
@@ -40,7 +42,10 @@ function scrapeAllTweets_helper(screen_name, maxTweetId) {
 		if (err) {
 			log("Error!");
 			log(err);
-			return;
+			log("errored out on "+screen_name);
+			log("Aborted at "+new Date().toTimeString());
+			process.exit();
+			// return;
 		}
 		for (var i in reply) {
 			var obj = reply[i];

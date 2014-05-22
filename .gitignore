@@ -25,3 +25,7 @@ Twitter/test.js
 OpenAccess/node_modules/*
 OpenAccess/config.js
 OpenAccess/articles/*
+
+#LinkedIn stuff
+LinkedIn/node_modules/*
+LinkedIn/config.js
