@@ -29,3 +29,4 @@ OpenAccess/articles/*
 #LinkedIn stuff
 LinkedIn/node_modules/*
 LinkedIn/config.js
+LinkedIn/accessToken.js
