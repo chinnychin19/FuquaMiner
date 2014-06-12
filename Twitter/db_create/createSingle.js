@@ -10,12 +10,27 @@ var connectURI = config.mongoConnectUri;
 var collectionName = 'Microsoft_Accounts';
 
 
+var creds;
+var remainingFile;
 
-var TScraper = new Twit(config.twitterCredentials);
+var arg = process.argv[2];
+
+if (arg == 1) {
+	creds = config.twitterCredentials;
+	remainingFile = '../zzRemaining.txt';
+} else if (arg == 2) {
+	creds = config.chinmayCredentials;
+	remainingFile = '../zzRemaining2.txt';
+} else if (arg == 3) {
+	creds = config.chinmayCredentials2;
+	remainingFile = '../zzRemaining3.txt';
+}
+
+var TScraper = new Twit(creds);
 // var TScraper = new Twit(config.chinmayCredentials);
 // var TScraper = new Twit(config.chinmayCredentials2);
 
-var allScreenNames = fs.readFileSync('../zzRemaining.txt').toString().trim().split('\n');
+var allScreenNames = fs.readFileSync(remainingFile).toString().trim().split('\n');
 var screen_name = allScreenNames.shift();
 
 

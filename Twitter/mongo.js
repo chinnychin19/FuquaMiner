@@ -39,14 +39,15 @@ function addObjectsToDB(connectURI, collectionName, data, attempt) { // data is 
 }
 
 function tryAgain(connectURI, collectionName, data, attempt, err) {
-	if (attempt >= 10) {
+	if (attempt >= 3) {
 		console.log('giving up trying to connect...');
 		console.log(err);
 		return;
 	}
 	setTimeout(function() {
-		console.log('attempting to connect again');
-		addObjectsToDB(connectURI, collectionName, data, attempt+1);
+		var copied = attempt;
+		console.log('attempting to connect again (time #'+copied);
+		addObjectsToDB(connectURI, collectionName, data, copied+1);
 	}, 5000); // try again in 5 seconds
 }
 
