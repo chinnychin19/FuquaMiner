@@ -34,3 +34,7 @@ LinkedIn/accessToken.js
 #Yahoo Finance stuff
 Yahoo_Finance/node_modules/*
 Yahoo_Finance/config.js
+
+#Facebook stuff
+Facebook/node_modules/*
+Facebook/config.js
